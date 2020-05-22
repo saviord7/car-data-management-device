@@ -3,7 +3,7 @@ const fetch = require('node-fetch');
 const config = require('config');
 const telematics = require('./data/telematics.json');
 const device = require('./config/device.json');
-const {uniqueNamesGenerator, names, colors, countries} = require('unique-names-generator');
+const {uniqueNamesGenerator, names, adjectives, countries} = require('unique-names-generator');
 
 let delayData = (delay, owner) => {
   return (data, index) => {
@@ -22,7 +22,7 @@ deviceClient.connect();
 
 deviceClient.on('connect', () => {
   let tripName = uniqueNamesGenerator({
-    dictionaries: [names, colors, countries],
+    dictionaries: [names, adjectives, countries],
     separator: ' ',
     length: 3
   });
@@ -57,7 +57,7 @@ deviceClient.on('connect', () => {
                         .then(({trip}) => {
                           telematics
                               .filter((data) => {
-                                return data.owner === 0;  // Change value for another sample data from telematics.json [from 0 to 50]
+                                return data.owner === 39;  // Change value for another sample data from telematics.json [from 0 to 50]
                               })
                               .forEach(delayData(1000, trip._id));
                         });
